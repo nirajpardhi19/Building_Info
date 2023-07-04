@@ -1,0 +1,83 @@
+Sumit Joshi
+4:34 PM
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="./css/style.css"/>
+<title>Posts</title>
+</head>
+<body>
+<div class="nav-bar">
+<a href="./index.html"> <img src="./assets//images/small-logo-2.jpg" alt="logo"/></a>
+<ul class="menu">
+<li> <a href="./index.html"> HOME </a></li>
+<li> <a href="./posts.html"> FETCH POSTS </a></li>
+<li> <a href="./products.html"> PRODUCTS</a></li>
+<li> <a href="./contact-us.html"> CONTACT US </a></li>
+</ul>
+</div>
+<!-- main portian-->
+<div >
+<h2> Products</h2>
+<div>
+<table id="tbl" class="tbl">
+<tr>
+<th colspan="5"><a href="./addproduct.html"> Add Products</a></th>
+</tr>
+<tr>
+<th> S.No</th>
+<th> Name </th>
+<th> Price</th>
+<th> Quantity</th>
+<th> Action</th>
+</tr>
+</table>
+</div>
+</div>
+<div class="footer">
+<p> Odin SChool , India | Copyright &copy; 2023</p>
+</div>
+<!-- footer -->
+<script>
+// console.log("Hello");
+(async function(){
+try{
+console.log("Hello")
+let API="http://localhost:3001/products";
+let res=await fetch(API);
+let data=await res.json();
+console.log(data)
+data.forEach((pro,ind)=>{
+document.getElementById("tbl").innerHTML+=`<tr>
+<td>${ind+1}</td>
+<td>${pro.name}</td>
+<td> ${pro.price}</td>
+<td> ${pro.quantity}</td>
+<td>
+<input type='button' value='Delete' onclick='delPro(${pro.id})'/>
+</td>
+</tr>`
+})
+}
+catch(err){
+console.log(err)
+}
+})();
+async function delPro(id){
+if(confirm("Do u want to delete")){
+let res=await fetch(`http://localhost:3001/products/${id}`,{
+method:'DELETE'
+})
+let data=await res.json();
+if(data){
+alert("Product Deleted");
+window.location.href="./products.html";
+}
+}
+}
+</script>
+</body>
+</html>
